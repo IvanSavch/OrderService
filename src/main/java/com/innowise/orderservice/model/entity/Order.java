@@ -28,6 +28,7 @@ public class Order extends Auditable {
     private String status;
     private Long totalPrice;
     private Boolean deleted;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> list;
 
