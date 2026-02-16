@@ -33,5 +33,5 @@ public class OrderItem extends Auditable {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    private Long quantity;
+    private int quantity;
 }

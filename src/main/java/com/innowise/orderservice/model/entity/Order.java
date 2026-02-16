@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -26,7 +27,7 @@ public class Order extends Auditable {
     private Long id;
     private Long userId;
     private String status;
-    private Long totalPrice;
+    private BigDecimal totalPrice;
     private Boolean deleted;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)

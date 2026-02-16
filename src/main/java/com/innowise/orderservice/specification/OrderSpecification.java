@@ -17,9 +17,19 @@ public class OrderSpecification {
     }
 
     public static Specification<Order> hasCreatedAt(LocalDateTime from, LocalDateTime to) {
-//        if (from == null) {
-//            return null;
-//        }
-        return (root, query, criteriaBuilder) -> criteriaBuilder.between(root.get("createdAt"), from,to);
+        if (from == null && to == null) {
+            return null;
+
+        }
+        if (from != null && to == null) {
+            return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("createdAt"), from);
+        }
+
+        if (from == null && to != null) {
+            return (root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("createdAt"), to);
+        }
+
+
+        return (root, query, criteriaBuilder) -> criteriaBuilder.between(root.get("createdAt"), from, to);
     }
 }

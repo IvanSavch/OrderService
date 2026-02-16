@@ -1,11 +1,10 @@
 package com.innowise.orderservice.service;
 
-import com.innowise.orderservice.model.dto.ItemDto;
+import com.innowise.orderservice.model.dto.item.ItemCreateDto;
 import com.innowise.orderservice.model.entity.Item;
 import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ItemService {
@@ -15,7 +14,7 @@ public interface ItemService {
 
     List<Item> findAll(Pageable pageable, String name, BigDecimal price);
 
-    Item updateById(Long id, ItemDto itemDto);
+    Item updateById(Long id, ItemCreateDto itemCreateDto);
 
     void delete(Item item);
 }

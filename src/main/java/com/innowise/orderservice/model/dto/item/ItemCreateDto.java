@@ -1,4 +1,4 @@
-package com.innowise.orderservice.model.dto;
+package com.innowise.orderservice.model.dto.item;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemDto {
+public class ItemCreateDto {
     private String name;
     private BigDecimal price;
 }

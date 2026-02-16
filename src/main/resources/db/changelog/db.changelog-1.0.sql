@@ -1,4 +1,4 @@
--- liquibase formatted sql
+--liquibase formatted sql
 
 --changeset Sauchanka:1
 create table orders

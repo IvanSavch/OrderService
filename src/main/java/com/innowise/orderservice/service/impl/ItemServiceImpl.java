@@ -2,7 +2,7 @@ package com.innowise.orderservice.service.impl;
 
 import com.innowise.orderservice.exception.ItemNotFoundException;
 import com.innowise.orderservice.mapper.ItemMapper;
-import com.innowise.orderservice.model.dto.ItemDto;
+import com.innowise.orderservice.model.dto.item.ItemCreateDto;
 import com.innowise.orderservice.model.entity.Item;
 import com.innowise.orderservice.repository.ItemRepository;
 import com.innowise.orderservice.service.ItemService;
@@ -45,10 +45,10 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
-    public Item updateById(Long id, ItemDto itemDto) {
-        Item newItem = itemMapper.toItem(itemDto);
-        newItem.setId(id);
-        return itemRepository.save(newItem);
+    public Item updateById(Long id, ItemCreateDto itemCreateDto) {
+        Item item = itemMapper.toItem(itemCreateDto);
+        item.setId(id);
+        return itemRepository.save(item);
     }
 
     @Override

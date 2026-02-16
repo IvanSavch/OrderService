@@ -1,7 +1,7 @@
 package com.innowise.orderservice.service.impl;
 
 import com.innowise.orderservice.exception.OrderNotFoundException;
-import com.innowise.orderservice.model.dto.OrderItemDto;
+import com.innowise.orderservice.model.dto.orderitem.OrderItemDto;
 import com.innowise.orderservice.model.entity.Item;
 import com.innowise.orderservice.model.entity.Order;
 import com.innowise.orderservice.model.entity.OrderItem;
@@ -34,13 +34,13 @@ public class OrderItemImpl implements OrderItemService {
         return orderItemRepository.findById(id).orElseThrow(OrderNotFoundException::new);
     }
 
-    @Override
-    @Transactional
-    public OrderItem updateById(Long id, OrderItemDto orderItemDto) {
-        Order orderById = orderService.findById(orderItemDto.getOrderId());
-        Item itemById = itemService.findById(orderItemDto.getItemId());
-        return orderItemRepository.save(new OrderItem(id, orderById, itemById, orderItemDto.getQuantity()));
-    }
+//    @Override
+//    @Transactional
+//    public OrderItem updateById(Long id, OrderItemDto orderItemDto) {
+//        Order orderById = orderService.findById(orderItemDto.getOrderId());
+//        Item itemById = itemService.findById(orderItemDto.getItemId());
+//        return orderItemRepository.save(new OrderItem(id, orderById, itemById, orderItemDto.getQuantity()));
+//    }
 
     @Override
     @Transactional
