@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponse> handleEnumError(HttpMessageNotReadableException httpMessageNotReadableException) {
+    public ResponseEntity<ErrorResponse> handleEnumError() {
         String message = "Invalid status. Allowed values: CREATED, DELIVERED, IN_PROGRESS";
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setTitle(message);
