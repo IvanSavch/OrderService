@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {OrderItemMapper.class})
@@ -18,7 +19,7 @@ public interface OrderMapper {
 
     default List<OrderResponseDto> toListOrderResponseDto(List<Order> orderList, UserDto userDto) {
         if (orderList == null) {
-            return null;
+            return Collections.emptyList();
         }
         List<OrderResponseDto> list = new ArrayList<>(orderList.size());
         for (Order order : orderList) {
