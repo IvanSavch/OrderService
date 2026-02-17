@@ -13,6 +13,7 @@ import java.util.List;
 public interface OrderMapper {
     @Mapping(source = "order.id", target = "id")
     @Mapping(target = "items", source = "order.list")
+    @Mapping(target = "user",source = "userDto")
     OrderResponseDto toResponse(Order order, UserDto userDto);
 
     default List<OrderResponseDto> toListOrderResponseDto(List<Order> orderList, UserDto userDto) {

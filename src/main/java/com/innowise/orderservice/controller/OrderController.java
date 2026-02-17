@@ -1,13 +1,16 @@
 package com.innowise.orderservice.controller;
 
+import com.innowise.orderservice.exception.InvalidStatusException;
 import com.innowise.orderservice.mapper.OrderMapper;
 import com.innowise.orderservice.model.dto.order.OrderCreateDto;
 import com.innowise.orderservice.model.dto.order.OrderResponseDto;
 import com.innowise.orderservice.model.dto.order.OrderUpdateDto;
 import com.innowise.orderservice.service.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +33,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderCreateDto orderCreateDto) {
+    public ResponseEntity<OrderResponseDto> createOrder(@RequestBody @Valid OrderCreateDto orderCreateDto) {
         OrderResponseDto orderResponseDto = orderService.create(orderCreateDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(orderResponseDto);
     }
@@ -52,8 +55,13 @@ public class OrderController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<OrderResponseDto> updateById(@PathVariable Long id,
-                                                       @RequestBody OrderUpdateDto orderUpdateDto) {
+                                                       @RequestBody @Valid OrderUpdateDto orderUpdateDto) {
         OrderResponseDto orderResponseDto = orderService.updateById(id, orderUpdateDto);
         return ResponseEntity.ok(orderResponseDto);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id){
+        orderService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -26,11 +26,14 @@ public class Order extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
-    private String status;
+    private OrderStatus status;
     private BigDecimal totalPrice;
     private Boolean deleted;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> list;
 
+    public enum OrderStatus{
+        CREATED,IN_PROGRESS,DELIVERED
+    }
 }

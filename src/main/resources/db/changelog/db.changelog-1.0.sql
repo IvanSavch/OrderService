@@ -10,7 +10,6 @@ create table orders
     deleted     boolean        not null,
     created_at  timestamp,
     updated_at  timestamp
-
 );
 create table items
 (

@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
         UserDto userDto = userClient.findByEmail(orderCreateDto.getEmail());
 
         Order order = new Order();
-        order.setStatus(orderCreateDto.getStatus());
+        order.setStatus(Order.OrderStatus.CREATED);
         order.setUserId(userDto.getId());
         order.setDeleted(false);
 
