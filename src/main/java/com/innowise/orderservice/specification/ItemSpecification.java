@@ -1,7 +1,6 @@
 package com.innowise.orderservice.specification;
 
 import com.innowise.orderservice.model.entity.Item;
-import com.innowise.orderservice.model.entity.Order;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;

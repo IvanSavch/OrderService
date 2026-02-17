@@ -1,4 +1,4 @@
-package com.innowise.orderservice.service.user;
+package com.innowise.orderservice.client;
 
 import com.innowise.orderservice.exception.UserNotFoundException;
 import com.innowise.orderservice.model.dto.UserDto;
@@ -10,10 +10,10 @@ import org.springframework.web.client.RestTemplate;
 import javax.naming.ServiceUnavailableException;
 
 @Service
-public class UserService {
+public class UserClient {
     private final RestTemplate restTemplate;
 
-    public UserService(RestTemplate restTemplate) {
+    public UserClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
