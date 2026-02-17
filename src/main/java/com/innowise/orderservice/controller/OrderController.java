@@ -1,7 +1,6 @@
 package com.innowise.orderservice.controller;
 
-import com.innowise.orderservice.exception.InvalidStatusException;
-import com.innowise.orderservice.mapper.OrderMapper;
+
 import com.innowise.orderservice.model.dto.order.OrderCreateDto;
 import com.innowise.orderservice.model.dto.order.OrderResponseDto;
 import com.innowise.orderservice.model.dto.order.OrderUpdateDto;
@@ -42,6 +41,11 @@ public class OrderController {
     public ResponseEntity<List<OrderResponseDto>> getByUserId(@PathVariable Long id) {
         List<OrderResponseDto> byUserId = orderService.findByUserId(id);
         return ResponseEntity.ok(byUserId);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderResponseDto> getById(@PathVariable Long id) {
+        OrderResponseDto byId = orderService.findById(id);
+        return ResponseEntity.ok(byId);
     }
 
     @GetMapping
