@@ -116,7 +116,6 @@ public class OrderControllerTest {
                                 .withBody(objectMapper.writeValueAsString(userDto))
                                 .withStatus(200)));
     }
-
     @BeforeEach
     void setUp() {
         wireMock.resetAll();
