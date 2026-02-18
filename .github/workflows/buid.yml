@@ -1,7 +1,7 @@
 name: user service CI pipeline
 on:
   push:
-    branches: [ main , tasks/USR-0]
+    branches: [ main , tasks/ORD-0]
   pull_request:
     types: [ opened, synchronize, reopened ]
 
@@ -31,16 +31,16 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build Docker image
-        run: docker build -t user-service .
+        run: docker build -t order_service .
 
       - name: Save docker image as artifact
-        run: docker save user-service -o user-service.tar
+        run: docker save order_service -o order_service.tar
 
       - name: Upload docker image artifact
         uses: actions/upload-artifact@v4
         with:
-          name: user service image
-          path: user-service.tar
+          name: order_service image
+          path: order_service.tar
 
       - name: Cache SonarQube packages
         uses: actions/cache@v3
@@ -56,6 +56,6 @@ jobs:
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.organization=ivansavch \
-            -Dsonar.projectKey=IvanSavch_UserService
+            -Dsonar.projectKey=IvanSavch_OrderService
 
 
