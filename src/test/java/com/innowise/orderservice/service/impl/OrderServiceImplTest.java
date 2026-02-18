@@ -161,7 +161,7 @@ class OrderServiceImplTest {
         when(userClient.findById(1L)).thenReturn(userDto);
         when(orderMapper.toResponse(order, userDto)).thenReturn(new OrderResponseDto());
 
-        List<OrderResponseDto> result = orderService.findAll(pageable, "CREATED", null, null);
+        List<OrderResponseDto> result = orderService.findAll(pageable, Order.OrderStatus.CREATED, null, null);
 
         assertEquals(2, result.size());
         verify(orderRepository).findAll(any(Specification.class), eq(pageable));

@@ -90,8 +90,9 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toListOrderResponseDto(byUserId,userDto);
     }
     @Override
-    public List<OrderResponseDto> findAll(Pageable pageable, String status, LocalDateTime from,LocalDateTime to){
-        Specification<Order> orderSpecification = Specification.allOf(OrderSpecification.hasStatus(status)).
+    public List<OrderResponseDto> findAll(Pageable pageable, Order.OrderStatus status, LocalDateTime from, LocalDateTime to){
+        Specification<Order> orderSpecification = Specification
+                .allOf(OrderSpecification.hasStatus(status)).
                 and(OrderSpecification.hasCreatedAt(from,to));
         List<Order> content = orderRepository.findAll(orderSpecification, pageable).getContent();
         List<OrderResponseDto> orderResponseDtoList = new ArrayList<>();

@@ -4,11 +4,13 @@ package com.innowise.orderservice.controller;
 import com.innowise.orderservice.model.dto.order.OrderCreateDto;
 import com.innowise.orderservice.model.dto.order.OrderResponseDto;
 import com.innowise.orderservice.model.dto.order.OrderUpdateDto;
+import com.innowise.orderservice.model.entity.Order;
 import com.innowise.orderservice.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,24 +34,28 @@ public class OrderController {
     }
 
     @PostMapping
+    @PreAuthorize("@authenticationServiceImpl.adminRole(authentication)")
     public ResponseEntity<OrderResponseDto> createOrder(@RequestBody @Valid OrderCreateDto orderCreateDto) {
         OrderResponseDto orderResponseDto = orderService.create(orderCreateDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(orderResponseDto);
     }
 
     @GetMapping("/users/{id}")
+    @PreAuthorize("@authenticationServiceImpl.adminRole(authentication) or @authenticationServiceImpl.isSelf(#id, authentication)")
     public ResponseEntity<List<OrderResponseDto>> getByUserId(@PathVariable Long id) {
         List<OrderResponseDto> byUserId = orderService.findByUserId(id);
         return ResponseEntity.ok(byUserId);
     }
     @GetMapping("/{id}")
+    @PreAuthorize("@authenticationServiceImpl.adminRole(authentication)")
     public ResponseEntity<OrderResponseDto> getById(@PathVariable Long id) {
         OrderResponseDto byId = orderService.findById(id);
         return ResponseEntity.ok(byId);
     }
 
     @GetMapping
-    public ResponseEntity<List<OrderResponseDto>> getAll(@RequestParam(required = false) String status,
+    @PreAuthorize("@authenticationServiceImpl.adminRole(authentication)")
+    public ResponseEntity<List<OrderResponseDto>> getAll(@RequestParam(required = false) Order.OrderStatus status,
                                                          @RequestParam(required = false) LocalDateTime from,
                                                          @RequestParam(required = false) LocalDateTime to,
                                                          @RequestParam(required = false, defaultValue = "0") int page) {
@@ -58,12 +64,14 @@ public class OrderController {
 
     }
     @PutMapping("/{id}")
+    @PreAuthorize("@authenticationServiceImpl.adminRole(authentication)")
     public ResponseEntity<OrderResponseDto> updateById(@PathVariable Long id,
                                                        @RequestBody @Valid OrderUpdateDto orderUpdateDto) {
         OrderResponseDto orderResponseDto = orderService.updateById(id, orderUpdateDto);
         return ResponseEntity.ok(orderResponseDto);
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("@authenticationServiceImpl.adminRole(authentication)")
     public ResponseEntity<Void> deleteById(@PathVariable Long id){
         orderService.deleteById(id);
         return ResponseEntity.noContent().build();

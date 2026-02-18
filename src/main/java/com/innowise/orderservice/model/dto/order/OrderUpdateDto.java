@@ -3,8 +3,6 @@ package com.innowise.orderservice.model.dto.order;
 import com.innowise.orderservice.model.dto.orderitem.OrderItemDto;
 import com.innowise.orderservice.model.entity.Order;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;

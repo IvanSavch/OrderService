@@ -9,10 +9,11 @@ public class OrderSpecification {
     private OrderSpecification() {
     }
 
-    public static Specification<Order> hasStatus(String status) {
+    public static Specification<Order> hasStatus(Order.OrderStatus status) {
         if (status == null) {
             return null;
         }
+
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("status"), status);
     }
 

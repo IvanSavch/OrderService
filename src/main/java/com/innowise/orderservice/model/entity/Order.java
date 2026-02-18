@@ -2,6 +2,8 @@ package com.innowise.orderservice.model.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,6 +28,7 @@ public class Order extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
     private BigDecimal totalPrice;
     private Boolean deleted;
@@ -34,6 +37,6 @@ public class Order extends Auditable {
     private List<OrderItem> list;
 
     public enum OrderStatus{
-        CREATED,IN_PROGRESS,DELIVERED
+        CREATED,IN_PROGRESS,DELIVERED,CANCELLED,PAID
     }
 }
