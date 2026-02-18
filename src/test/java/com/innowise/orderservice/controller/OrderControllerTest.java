@@ -65,7 +65,7 @@ public class OrderControllerTest {
 
     @RegisterExtension
     static WireMockExtension wireMock = WireMockExtension.newInstance()
-            .options(options().dynamicPort())
+            .options(options().dynamicPort().usingFilesUnderClasspath("src/test/resources"))
             .build();
     @Container
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres")
