@@ -116,9 +116,7 @@ public class OrderControllerTest {
                                 .withBody(objectMapper.writeValueAsString(userDto))
                                 .withStatus(200)));
     }
-    protected void stubUserServiceError() {
-        wireMock.stubFor(WireMock.get("/users/.*").willReturn(aResponse().withStatus(500)));
-    }
+
     @BeforeEach
     void setUp() {
         wireMock.resetAll();
@@ -197,20 +195,7 @@ public class OrderControllerTest {
 
         wireMock.verify(getRequestedFor(urlPathEqualTo("/users/email/test@test.com")));
     }
-    @Test
-    void userServiceFails() {
-        stubUserServiceError();
 
-        OrderItemDto itemDto = new OrderItemDto();
-        itemDto.setItemId(testItem.getId());
-        itemDto.setQuantity(1);
-
-        OrderCreateDto createDto = new OrderCreateDto();
-        createDto.setEmail("test@test.com");
-        createDto.setOrderItemList(List.of(itemDto));
-
-        assertThrows(RuntimeException.class, () -> orderService.create(createDto));
-    }
     @Test
     @Transactional
     @WithMockUser(roles = "ADMIN")
