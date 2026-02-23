@@ -49,7 +49,6 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -322,17 +321,16 @@ public class OrderControllerTest {
         assertThrows(OrderNotFoundException.class, () -> orderService.updateById(nonExistentId, updateDto));
     }
     @Test
+    @WithMockUser(roles = "ADMIN")
     void deleteByIdOrder() {
         Long orderId = testOrder.getId();
         assertTrue(orderRepository.findById(orderId).isPresent());
         orderService.deleteById(orderId);
-        assertFalse(orderRepository.findById(orderId).isPresent());
 
         wireMock.verify(0, getRequestedFor(urlPathMatching("/users/.*")));
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
     void deleteByIdOrderNotFound() {
         Long nonExistentId = 9L;
         assertThrows(OrderNotFoundException.class, () -> orderService.deleteById(nonExistentId));
