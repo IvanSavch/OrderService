@@ -1,5 +1,6 @@
 package com.innowise.orderservice.mapper;
 
+import com.innowise.orderservice.model.dto.orderitem.OrderItemDto;
 import com.innowise.orderservice.model.dto.orderitem.OrderItemResponseDto;
 import com.innowise.orderservice.model.entity.OrderItem;
 import org.mapstruct.Mapper;
@@ -14,4 +15,7 @@ public interface OrderItemMapper {
     @Mapping(target = "price", source = "item.price")
     OrderItemResponseDto toOrderItemResponseDto(OrderItem orderItem);
     List<OrderItemResponseDto> toListOrderItemResponseDTO(List<OrderItem> list);
+    OrderItem toOrderItem(OrderItemDto orderItemDto);
+
+
 }

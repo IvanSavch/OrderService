@@ -14,11 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderUpdateDto {
-    @NotNull
+    @NotNull(message = "Status not be null")
     private Order.OrderStatus status;
-    @NotNull
-    private Boolean deleted;
     @Valid
-    @NotNull
+    @NotNull(message = "OrderItem not be null")
     private List<OrderItemDto> orderItem;
 }

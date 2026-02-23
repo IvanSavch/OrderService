@@ -240,7 +240,8 @@ public class OrderControllerTest {
         wireMock.verify(1, getRequestedFor(urlPathEqualTo("/users/" + testUser.getId())));
     }
     @Test
-    @Transactional @WithMockUser(roles = "ADMIN")
+    @Transactional
+    @WithMockUser(roles = "ADMIN")
     void findAllPagination() throws Exception {
         Pageable pageable = PageRequest.of(0, 20);
 
@@ -321,7 +322,7 @@ public class OrderControllerTest {
         assertThrows(OrderNotFoundException.class, () -> orderService.updateById(nonExistentId, updateDto));
     }
     @Test
-    void deleteByIdOrderExists() {
+    void deleteByIdOrder() {
         Long orderId = testOrder.getId();
         assertTrue(orderRepository.findById(orderId).isPresent());
         orderService.deleteById(orderId);

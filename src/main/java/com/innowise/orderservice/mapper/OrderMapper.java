@@ -1,6 +1,7 @@
 package com.innowise.orderservice.mapper;
 
 import com.innowise.orderservice.model.dto.UserDto;
+import com.innowise.orderservice.model.dto.order.OrderCreateDto;
 import com.innowise.orderservice.model.dto.order.OrderResponseDto;
 import com.innowise.orderservice.model.entity.Order;
 import org.mapstruct.Mapper;
@@ -27,5 +28,6 @@ public interface OrderMapper {
         }
         return list;
     }
-
+    @Mapping(target = "list", source = "orderCreateDto.orderItemList")
+    Order toOrder(OrderCreateDto orderCreateDto);
 }

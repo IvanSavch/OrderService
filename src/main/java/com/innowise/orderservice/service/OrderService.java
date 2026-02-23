@@ -13,7 +13,10 @@ public interface OrderService {
     OrderResponseDto create(OrderCreateDto orderCreateDto);
     OrderResponseDto findById(Long id);
     List<OrderResponseDto> findByUserId(Long userId);
-    List<OrderResponseDto> findAll(Pageable pageable, Order.OrderStatus status, LocalDateTime from, LocalDateTime to);
+    List<OrderResponseDto> findAll(Pageable pageable,
+                                   Order.OrderStatus status,
+                                   LocalDateTime from,
+                                   LocalDateTime to);
     OrderResponseDto updateById(Long id, OrderUpdateDto orderUpdateDto);
     void deleteById(Long id);
 

@@ -30,6 +30,9 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
 
+      - name: Build and test
+        run: mvn clean verify
+
       - name: Build Docker image
         run: docker build -t order_service .
 

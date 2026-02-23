@@ -40,12 +40,13 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderResponseDto);
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/users/{id}/orders")
     @PreAuthorize("@authenticationServiceImpl.adminRole(authentication) or @authenticationServiceImpl.isSelf(#id, authentication)")
     public ResponseEntity<List<OrderResponseDto>> getByUserId(@PathVariable Long id) {
         List<OrderResponseDto> byUserId = orderService.findByUserId(id);
         return ResponseEntity.ok(byUserId);
     }
+
     @GetMapping("/{id}")
     @PreAuthorize("@authenticationServiceImpl.adminRole(authentication)")
     public ResponseEntity<OrderResponseDto> getById(@PathVariable Long id) {
@@ -63,6 +64,7 @@ public class OrderController {
         return ResponseEntity.ok(all);
 
     }
+
     @PutMapping("/{id}")
     @PreAuthorize("@authenticationServiceImpl.adminRole(authentication)")
     public ResponseEntity<OrderResponseDto> updateById(@PathVariable Long id,
@@ -70,9 +72,10 @@ public class OrderController {
         OrderResponseDto orderResponseDto = orderService.updateById(id, orderUpdateDto);
         return ResponseEntity.ok(orderResponseDto);
     }
+
     @DeleteMapping("/{id}")
-    @PreAuthorize("@authenticationServiceImpl.adminRole(authentication)")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id){
+   // @PreAuthorize("@authenticationServiceImpl.adminRole(authentication)")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         orderService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

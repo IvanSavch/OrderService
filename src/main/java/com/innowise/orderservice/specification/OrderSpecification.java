@@ -30,7 +30,10 @@ public class OrderSpecification {
             return (root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("createdAt"), to);
         }
 
-
         return (root, query, criteriaBuilder) -> criteriaBuilder.between(root.get("createdAt"), from, to);
+    }
+
+    public static Specification<Order> hasDeleted() {
+        return (root, query, cb) -> cb.isFalse(root.get("deleted"));
     }
 }
