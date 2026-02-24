@@ -147,7 +147,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional
     @Scheduled(cron = "0 0 0 1 1 *")
-    @Override
     public void deletedRemarkedOrder() {
         orderRepository.deletedRemarkedOrder();
     }
