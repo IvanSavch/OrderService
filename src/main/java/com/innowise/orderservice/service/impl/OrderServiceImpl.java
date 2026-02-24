@@ -18,6 +18,7 @@ import com.innowise.orderservice.client.UserClient;
 import com.innowise.orderservice.specification.OrderSpecification;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -142,5 +143,12 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
         order.setDeleted(true);
         orderRepository.save(order);
+    }
+
+    @Transactional
+    @Scheduled(cron = "0 0 0 1 1 *")
+    @Override
+    public void deleteExpiredTokens() {
+        orderRepository.deletedOrderRemarkedDeleted();
     }
 }
