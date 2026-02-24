@@ -19,6 +19,6 @@ public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecific
     @NotNull
     Optional<Order> findById(Long id);
     @Query(nativeQuery = true,value = "DELETE FROM orders o WHERE o.created_at < NOW() - INTERVAL '1' YEAR AND o.deleted = true;")
-    void deletedOrderRemarkedDeleted();
+    void deletedRemarkedOrder();
 
 }
