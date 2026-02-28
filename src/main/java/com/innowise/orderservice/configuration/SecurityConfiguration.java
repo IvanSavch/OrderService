@@ -27,7 +27,9 @@ public class SecurityConfiguration {
                 .logout(AbstractHttpConfigurer::disable)
                 .headers(h -> h.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.DELETE,"/orders/{id}").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.DELETE,"/orders/{id}").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/orders/").permitAll()
+                        .anyRequest().authenticated())
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
