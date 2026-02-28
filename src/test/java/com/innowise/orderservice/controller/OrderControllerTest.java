@@ -25,6 +25,11 @@ import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -60,7 +65,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class OrderControllerTest {
+class OrderControllerTest {
 
     @RegisterExtension
     static WireMockExtension wireMock = WireMockExtension.newInstance()
@@ -165,6 +170,13 @@ public class OrderControllerTest {
     void resetCircuitBreaker() {
         circuitBreakerRegistry.circuitBreaker("userService").reset();
     }
+    @BeforeEach
+    void setUpAuthentication() {
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        Authentication authentication = new UsernamePasswordAuthenticationToken(1L, null, authorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
     @Test
     @WithMockUser(roles = "ADMIN")
     void create() throws Exception {
@@ -179,7 +191,7 @@ public class OrderControllerTest {
 
         stubUserByEmail("test@test.com", testUser);
 
-        mockMvc.perform(post("/orders")
+        mockMvc.perform(post("/orders/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(orderCreateDto)))
                 .andExpect(status().isCreated())
