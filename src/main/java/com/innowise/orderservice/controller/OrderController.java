@@ -71,6 +71,7 @@ public class OrderController {
         return ResponseEntity.ok(orderResponseDto);
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("@authenticationServiceImpl.adminRole(authentication)")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         orderService.deleteById(id);
         return ResponseEntity.noContent().build();

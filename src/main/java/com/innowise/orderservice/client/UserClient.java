@@ -26,7 +26,7 @@ public class UserClient {
 
     @CircuitBreaker(name = "userService", fallbackMethod = "findByEmailFallback")
     public UserDto findByEmail(String email) {
-        HttpEntity<Long> httpEntity = setHeader();
+        HttpEntity<Long> httpEntity = buildHeader();
         return restTemplate.exchange(url + "/users/email/{email}",HttpMethod.GET,httpEntity, UserDto.class, email).getBody();
     }
 
@@ -39,7 +39,7 @@ public class UserClient {
 
     @CircuitBreaker(name = "userService", fallbackMethod = "findByIdFallback")
     public UserDto findById(Long id) {
-        HttpEntity<Long> httpEntity = setHeader();
+        HttpEntity<Long> httpEntity = buildHeader();
         return restTemplate.exchange(url + "/users/{id}", HttpMethod.GET, httpEntity, UserDto.class, id).getBody();
     }
 
@@ -50,7 +50,7 @@ public class UserClient {
         throw new ServiceUnavailableException();
     }
 
-    private HttpEntity<Long> setHeader(){
+    private HttpEntity<Long> buildHeader(){
         HttpHeaders headers = new HttpHeaders();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long principal = (Long) authentication.getPrincipal();
