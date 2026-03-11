@@ -20,7 +20,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (authentication == null || !authentication.isAuthenticated()) {
             return false;
         }
-        String id = authentication.getName();
-        return String.valueOf(userId).equals(id);
+        Long id = (Long) authentication.getPrincipal();
+        return userId.equals(id);
     }
 }

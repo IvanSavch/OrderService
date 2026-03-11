@@ -9,12 +9,23 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,6 +43,12 @@ class UserClientTest {
     void setUp() {
         ReflectionTestUtils.setField(userClient, "url", baseUrl);
     }
+    @BeforeEach
+    void setUpAuthentication() {
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        Authentication authentication = new UsernamePasswordAuthenticationToken(1L, null, authorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
 
     @Test
     void findByEmail() {
@@ -39,8 +56,12 @@ class UserClientTest {
         UserDto userDto = new UserDto();
         userDto.setEmail(email);
 
-        when(restTemplate.getForEntity(baseUrl + "/users/email/{email}", UserDto.class, email))
-                .thenReturn(ResponseEntity.ok(userDto));
+        ResponseEntity<UserDto> responseEntity = ResponseEntity.ok(userDto);
+        when(restTemplate.exchange(eq(baseUrl + "/users/email/{email}"),
+                eq(HttpMethod.GET),
+                any(HttpEntity.class),
+                eq(UserDto.class),
+                eq(email))).thenReturn(responseEntity);
 
         UserDto result = userClient.findByEmail(email);
 
@@ -75,8 +96,12 @@ class UserClientTest {
         UserDto userDto = new UserDto();
         userDto.setId(1L);
 
-        when(restTemplate.getForEntity(baseUrl + "/users/{id}", UserDto.class, 1L))
-                .thenReturn(ResponseEntity.ok(userDto));
+        ResponseEntity<UserDto> responseEntity = ResponseEntity.ok(userDto);
+        when(restTemplate.exchange(eq(baseUrl + "/users/{id}"),
+                eq(HttpMethod.GET),
+                any(HttpEntity.class),
+                eq(UserDto.class),
+                eq(1L))).thenReturn(responseEntity);
 
         UserDto result = userClient.findById(1L);
 

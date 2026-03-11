@@ -9,18 +9,19 @@ services:
       - postgres
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/order_service
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_URL=${DB_URL_ORDER}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - USER_SERVICE_URL=${USER_SERVICE_URL_DOCKER}
     ports:
-      - "81:8080"
+      - "8083:8083"
 
   postgres:
     image: postgres
-    container_name: postgres
+    container_name: order_service_db
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=postgres
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME_ORDER}
 
 
