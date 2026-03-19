@@ -19,4 +19,5 @@ public interface OrderService {
                                    LocalDateTime to);
     OrderResponseDto updateById(Long id, OrderUpdateDto orderUpdateDto);
     void deleteById(Long id);
+    void updateStatusById(Long id, Order.OrderStatus status);
 }
