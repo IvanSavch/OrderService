@@ -16,6 +16,9 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class UserClient {
+    private static final String USER_ID_HEADER = "UserId";
+    private static final String USER_ROLES_HEADER = "UserRoles";
+    private static final String ROLE = "ROLE_ADMIN";
     private final RestTemplate restTemplate;
     @Value("${user.service.url}")
     private String url;
@@ -55,8 +58,8 @@ public class UserClient {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long principal = (Long) authentication.getPrincipal();
 
-        headers.set("UserId", principal.toString());
-        headers.set("UserRoles", "ROLE_ADMIN");
+        headers.set(USER_ID_HEADER, principal.toString());
+        headers.set(USER_ROLES_HEADER, ROLE);
         return new HttpEntity<>(headers);
     }
 }

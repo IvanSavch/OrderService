@@ -136,7 +136,13 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
         return orderMapper.toResponse(order, userDto);
     }
+    @Override
+    public void updateStatusById(Long id, Order.OrderStatus status){
+        Order order = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
+        order.setStatus(status);
+        orderRepository.save(order);
 
+    }
     @Override
     @Transactional
     public void deleteById(Long id) {
